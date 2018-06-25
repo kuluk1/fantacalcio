@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1> {{ filter_players }} players</h1>
+<table class="table table-hover">
+    <tr  width="70px">
+        <td>Name</td>
+        <td>Last Name</td>
+        <td>Team</td>
+        <td>Roles</td>
+        <td>Assigned</td>
+        <td>Assigned To</td>
+        <td>Assigned Value</td>
+    </tr>
+</table>
+    {% for player in players %}
+        {% include '_team.html' %}
+    {% endfor %}
+{% endblock %}

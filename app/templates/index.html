@@ -1,0 +1,60 @@
+{% extends "base.html" %} {% import 'bootstrap/wtf.html' as wtf %} {% block app_content %} {% if current_user.is_anonymous
+%}
+<h2 class="text-center">Please Login or Register!</h2> {% else %}
+<h2 class="text-center">Hi, {{ current_user.name }}!</h2>
+{% if form %}
+<div class="row">
+    <div class="col-md-4">
+        {{ wtf.quick_form(form) }}
+    </div>
+</div>
+{% endif %}
+<br>
+<br>
+<progress value="0" max="30" id="progressBar"></progress>
+<br>
+<br>
+<div id='bids'>
+    <ul class="list-group">
+        {% for bid in bids %} {% include '_bid.html' %} {% endfor %}
+    </ul>
+</div>
+<div id="log"></div>
+{% endif %} {% endblock %} {% block scripts %} {{ super()}}
+<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+<script type="text/javascript" charset="utf-8"> $(document).ready(function () {
+        // Use a "/test" namespace.
+        // An application can open a connection on multiple namespaces, and
+        // Socket.IO will multiplex all those connections on a single
+        // physical channel. If you don't care about multiple channels, you
+        // can set the namespace to an empty string.
+        namespace = '/test';
+        // Connect to the Socket.IO server.
+        // The connection URL has the following format:
+        //     http[s]://<domain>:<port>[/<namespace>]
+        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+
+
+        var timeleft = 30;
+        var downloadTimer = setInterval(function () {
+            document.getElementById("progressBar").value = 30 - --timeleft;
+            if (timeleft <= 0)
+                clearInterval(downloadTimer);
+        }, 1000);
+
+
+        socket.on('my_response', function (msg) {
+            $('#bids').prepend(msg.data);
+            timeleft = 30;
+        });
+        socket.on('new_player', function (msg) {
+            $("#bids").html("");
+            $('#bids').prepend(msg.data);
+            timeleft = 30;
+        });
+
+
+
+    });
+</script> {% endblock %}
