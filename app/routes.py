@@ -9,6 +9,7 @@ import random
 from sqlalchemy.sql import text
 from datetime import datetime
 
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
@@ -26,7 +27,7 @@ def index():
         latest_bid = Bid.query.filter_by(active=1).order_by(Bid.time.desc()).first()
         user = User.query.filter_by(id=form.user_id.data).first()
         if form.bid.data <= user.money:
-            sql = """select CURRENT_TIMESTAMP from users"""
+            sql = """select CURRENT_TIMESTAMP from users""" #stupido hack
             result = db.engine.execute(sql)
             names = []
             for row in result:
@@ -128,7 +129,7 @@ def assigned_players():
 @login_required
 def all_player():
     players = Player.query.all()
-    return filter_players('All assigned', players)
+    return filter_players('All', players)
 
 
 def filter_players(title, players):

@@ -1,12 +1,9 @@
-
-<table class="table table-hover"></table>
-    <td width="70px">
+    <tr width="70px">
             <td>{{ player.name }}</td>
             <td>{{ player.surname  }}</td>
             <td>{{ player.team  }}</td>
             <td>{{ player.roles  }}</td>
-            <td>{{ player.is_assigned()  }}</td>
+            <td><input type="checkbox" id="MyBooleanValue" name="MyBooleanValue"  {% if player.is_assigned() %} checked="True" {% endif %}></td>
             <td>{{ player.user.name}}</td>
             <td>{{ player.assigned_value  }}</td>
         </tr>
-</table>

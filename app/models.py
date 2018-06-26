@@ -25,6 +25,9 @@ class User(UserMixin, db.Model):
         return "<User(name='%s', password='%s')>" % (
             self.name, self.password_hash)
 
+    def get_role(self):
+        return self.role
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
