@@ -22,5 +22,5 @@ thread_lock = Lock()
 
 from app import routes, models
 
-socketio.run(app)
+
 #app.run()
