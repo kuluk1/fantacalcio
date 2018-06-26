@@ -1,1 +1,1 @@
-web: flask db upgrade; flask translate compile; gunicorn flfantacalcio:app
+web: gunicorn fantacalcio:app
