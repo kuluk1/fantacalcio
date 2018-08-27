@@ -1,1 +1,1 @@
-web: gunicorn fantacalcio:app --timeout 30 --log-level debug
+web: gunicorn fantacalcio:app
